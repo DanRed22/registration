@@ -142,6 +142,10 @@
                             <label for="sex">Sex</label>
                             <input type="text" class="form-control" id="sex" name="sex">
                         </div>
+                        <div class="form-group" style="margin-bottom:3%">
+                            <label for="remarks">Additional Remarks</label>
+                            <input type="text" class="form-control" id="remarks" name="remarks">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -223,12 +227,33 @@
 
     <script type="text/javascript">
         var stubNumber = '';
+        var inputStubId = 0;
 
         $(document).on('click', '.checkInBtn', function(event){
             //console.log("WENT IN HERE")
             var id = $(this).data('id');
 
-            storeStubNumber(id, stubNumber);
+            // console.log("Current ID: ",inputStubId);
+            // console.log("Input Element: ", dataIdValue,inputStubId);
+
+            var stubNumberInput = $(this).closest('tr').find('.stub-number'); 
+
+            if(inputStubId !=0 && stubNumberInput.length > 0){
+
+                const inputElement = stubNumberInput["0"];
+                const dataIdValue = inputElement.getAttribute("data-id");
+
+                console.log("1st: ",dataIdValue!=inputStubId,"2nd: ",stubNumberInput.length > 0)
+
+                if (dataIdValue!=inputStubId && stubNumberInput.length > 0) {
+                    //inputStubId=0;
+                    alert('Stub number input not found in the same row.');
+                    return;                
+                } else {
+                    storeStubNumber(id, stubNumber); 
+                }     
+            }
+
 
             $.ajax({
                 url: "checkin.php",
@@ -388,27 +413,20 @@
 });
 
         // Stores Control Number of Stub
-
-        function updateStubNumber(value) {
-            stubNumber = value;
-        }
-
-        $(document).on('change', '.stub-number', function () {
-            var value = $(this).val();
-            updateStubNumber(value);
-        });
+        var currId=0;
+        var currText='';
 
         function storeStubNumber(id,stubNumber) {
-            // console.log("Data Values: ",id,stubNumber);
+            console.log("Data Values: ",id,stubNumber);
             $.ajax({
-                type: 'POST',
-                url: 'add_stub_no.php',
-                data: {id:id,stubNumber:stubNumber},
-                success: function (response){
-                    console.log("Response: ",response);
-                    table = $('#datatable').DataTable();
-                    table.draw();
-                }
+            type: 'POST',
+            url: 'add_stub_no.php',
+            data: {id:id,stubNumber:stubNumber},
+            success: function (response){
+                console.log("Response: ",response);
+                table = $('#datatable').DataTable();
+                table.draw();
+            }
             })
         }
         
@@ -420,6 +438,42 @@
                 success: function (response){}
             })
         }
+
+        function updateStubNumber(value) {
+            stubNumber = value;
+        }
+
+        $(document).on('change', '.stub-number', function () {
+            var value = $(this).val();
+            inputStubId= $(this).data('id');
+            updateStubNumber(value);
+        });
+
+        var newInputValue = '';
+        
+        $(document).on('click', '.edit-icon', function(event) {
+            var id = $(this).data('id');
+
+            var container = $(this).parent('.stub-number-container');
+            var textElement = container.find('.stub-number-text');
+            
+            var currentText = textElement.text();
+            var newInputField = '<input type="text" data-id="'+id+'" name="stub-numberz" class="stub-numberz" value="'+currentText+'" />';
+            var newButton = '<button type="button" class="btn btn-success save-button">Save</button>';
+
+            container.empty().append(newInputField, newButton);
+
+            currId=id;
+        });
+
+        $(document).on('change', '.stub-numberz', function () {
+            newInputValue = $(this).val(); // Update the new input value
+            inputStubId = $(this).data('id');
+        });
+
+        $(document).on('click', '.save-button', function(event) {
+            storeStubNumber(currId, newInputValue);
+        });
 
         function showModalV1() {addModal.style.display = 'block';}
         function hideModalV1() {addModal.style.display = 'none';}

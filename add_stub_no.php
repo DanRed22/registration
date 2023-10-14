@@ -8,6 +8,7 @@ $stubno = $_POST['stubNumber'];
 
 $sql = "UPDATE `members` SET `stub_number`='$stubno' WHERE `id`='$id'";
 
+echo ($sql);
 $query = mysqli_query($con, $sql);
 
 if($query == true) 

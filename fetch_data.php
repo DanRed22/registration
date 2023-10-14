@@ -44,9 +44,14 @@ while($row = mysqli_fetch_assoc($run_query))
     $subarray[] = $row['type'];
 
     if ($row['stub_number'] === null) {
-        $subarray[] = '<input type="text" name="stub-number" class="stub-number" placeholder="Input Control Number" value="" />';
+        $subarray[] = '<input type="text" data-id='.$row['id'].' name="stub-number" class="stub-number" placeholder="Input Control Number" value="" />';
     } else {
-        $subarray[] = $row['stub_number'];
+        // $subarray[] = '<input type="text" data-id="'.$row['id'].'" name="stub-number" class="stub-number" placeholder="Input Control Number" value="'.$row['stub_number'].'" />';
+        // $subarray[] = $row['stub_number'];
+        $subarray[] = '<div class="stub-number-container" style="display:flex">
+                            <span class="stub-number-text" style="margin-right:5%">'.$row['stub_number'].'</span>
+                            <i class="edit-icon" style="cursor: pointer;" data-id='.$row['id'].'">✏</i>
+                        </div>';
     }
 
     $dt1 = new DateTime($row['timeIn']);
