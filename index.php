@@ -35,7 +35,7 @@
                                 <th>ID</th>
                                 <th>LASTNAME</th>
                                 <th>FIRSTNAME</th>
-                                <th>EMAIL</th>
+                                <th>EMAILS (PERSONAL - CORPORATE)</th>
                                 <th>SEX</th>
                                 <th>TYPE</th>
                                 <th>ACTIONS</th>
@@ -130,6 +130,10 @@
                             <input type="text" class="form-control" id="email" name="email">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
+                            <label for="alt_email">Alt E-mail</label>
+                            <input type="text" class="form-control" id="alt_email" name="alt_email">
+                        </div>
+                        <div class="form-group" style="margin-bottom:3%">
                             <label for="type">Type</label>
                             <input type="text" class="form-control" id="type" name="type">
                         </div>
@@ -148,6 +152,36 @@
 </div>
 
     </div>
+
+    <!--- MODAL FOR EDIT EMAIL -->
+    <div id="editEmailModal" style="display: none;" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editEmailForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="editEmail" name="editEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="alt_email">Alt Email</label>
+                        <input type="text" class="form-control" id="editAltEmail" name="editAltEmail">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveEmailChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="bootstrap-5.3.1/jquery-3.7.0.min.js"></script>
     <script src="DataTables/datatables.min.js"></script>
@@ -170,7 +204,18 @@
             'columnDefs': [{
                 'target': [0,5],
                 'orderable': false, 
-            }]
+            },
+            {
+            // Add the "Edit Email" button to the email column (index 3)
+            'targets': 3,
+            'render': function (data, type, full, meta) {
+                var email = full[3].split(" -- ")[0]; // Extract the email part
+                var alt_email = full[3].split(" -- ")[1];
+                return '<button class="btn btn-sm btn-primary editEmailBtn" data-id="' + full[0] + '" data-email="' + email + '" data-alt-email="' + alt_email + '">Edit</button> &emsp;' + email + ' -- ' + alt_email;
+            }
+            },
+        ],
+            
         });
     </script>
 
@@ -283,6 +328,47 @@
             });
             e.preventDefault();
         }
+
+
+        $(document).on('click', '.editEmailBtn', function () {
+    var id = $(this).data('id');
+    var email = $(this).data('email');
+    var altEmail = $(this).data('alt-email');
+    
+    // Populate the modal fields with the current values
+    $('#editEmail').val(email);
+    $('#editAltEmail').val(altEmail);
+    
+    // Open the edit email modal
+    $('#editEmailModal').modal('show');
+    
+    // Handle the save button click
+    $('#saveEmailChanges').on('click', function () {
+        var editedEmail = $('#editEmail').val();
+        var editedAltEmail = $('#editAltEmail').val();
+        
+        // Send the data to the server to update the email and alt_email for the user
+        $.ajax({
+            url: 'edit_emails.php',
+            method: 'POST',
+            data: {
+                id: id,
+                email: editedEmail,
+                alt_email: editedAltEmail
+            },
+            success: function (response) {
+                // Handle success or error here
+                if (response === 'success') {
+                    alert('Emails updated successfully');
+                    $('#editEmailModal').modal('hide');
+                    location.reload(); // Reload the table after the edit
+                } else {
+                    alert('Error updating emails');
+                }
+            }
+        });
+    });
+});
 
         function showModalV1() {addModal.style.display = 'block';}
         function hideModalV1() {addModal.style.display = 'none';}

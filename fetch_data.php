@@ -39,10 +39,10 @@ while($row = mysqli_fetch_assoc($run_query))
     $subarray[] = $row['id'];
     $subarray[] = $row['lastname'];
     $subarray[] = $row['firstname'];
-    $subarray[] = $row['email'];
+    $subarray[] = $row['email'] . ' -- ' . $row['alt_email'];
     $subarray[] = $row['sex'];
     $subarray[] = $row['type'];
-    
+
     
 
     $dt1 = new DateTime($row['timeIn']);
