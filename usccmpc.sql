@@ -960,7 +960,7 @@ INSERT INTO `members` (`id`, `lastname`, `firstname`, `sex`, `email`, `alt_email
 (937, 'MARINO', 'Sheila Ann', 'f', 'sheilaann_marino@yahoo.com', NULL, '2', NULL, NULL, NULL, NULL),
 (938, 'MARTIN', 'Alvin Mar', 'm', 'alvinmarvmartin@gmail.com', NULL, '2', NULL, NULL, NULL, NULL),
 (939, 'MATUTINAO', 'May Arlene', 'f', '', NULL, '2', NULL, NULL, NULL, NULL),
-(940, 'MAYOL', 'Kathea Mari', 'f', '', NULL, '2', NULL, NULL, NULL, NULL),
+(940, 'MAYOL', 'Kathea Mari', 'f', 'princesskathmari2018@gmail.com', NULL, '2', NULL, NULL, NULL, NULL),
 (941, 'MAYOL', 'Krizia Mari', 'f', 'princesskzmari2018@gmail.com', NULL, '2', NULL, NULL, NULL, NULL),
 (942, 'MOSQUERA', 'Carllito', 'm', '', NULL, '2', NULL, NULL, NULL, NULL),
 (943, 'MOZAR', 'Arsenia Ramona', 'f', '', NULL, '2', NULL, NULL, NULL, NULL),

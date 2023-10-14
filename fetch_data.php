@@ -43,7 +43,11 @@ while($row = mysqli_fetch_assoc($run_query))
     $subarray[] = $row['sex'];
     $subarray[] = $row['type'];
 
-    
+    if ($row['stub_number'] === null) {
+        $subarray[] = '<input type="text" name="stub-number" class="stub-number" placeholder="Input Control Number" value="" />';
+    } else {
+        $subarray[] = $row['stub_number'];
+    }
 
     $dt1 = new DateTime($row['timeIn']);
     $time1 = $dt1->format('h:i A');

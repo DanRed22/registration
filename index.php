@@ -38,6 +38,7 @@
                                 <th>EMAILS (PERSONAL - CORPORATE)</th>
                                 <th>SEX</th>
                                 <th>TYPE</th>
+                                <th>STUB NUMBER</th>
                                 <th>ACTIONS</th>
                             </thead>
                             <tbody>
@@ -221,9 +222,14 @@
     </script>
 
     <script type="text/javascript">
+        var stubNumber = '';
+
         $(document).on('click', '.checkInBtn', function(event){
             //console.log("WENT IN HERE")
             var id = $(this).data('id');
+
+            storeStubNumber(id, stubNumber);
+
             $.ajax({
                 url: "checkin.php",
                 data: {id: id},
@@ -237,9 +243,12 @@
                     if (status === 'success') {
                         if (action === 'alreadyCheckedIn') {
                             verifyModal.style.display = 'block';
-                            console.log(yesBtn,noBtn);
+                            // console.log(yesBtn,noBtn);
+
+
                             if(yesBtn || noBtn){
                                 yesBtn.addEventListener('click', function() {
+                                    revertStubNumber(id);
                                     $.ajax({
                                         url: "setnull.php",
                                         data: { id: id, type: "timeIn" },
@@ -290,7 +299,7 @@
                                         data: { id: id, type: "timeOut" },
                                         type: "post",
                                         success: function(response) {
-                                            console.log(response);
+                                            // console.log(response);
                                             location.reload();
                                         }
                                     });
@@ -377,6 +386,40 @@
         });
     });
 });
+
+        // Stores Control Number of Stub
+
+        function updateStubNumber(value) {
+            stubNumber = value;
+        }
+
+        $(document).on('change', '.stub-number', function () {
+            var value = $(this).val();
+            updateStubNumber(value);
+        });
+
+        function storeStubNumber(id,stubNumber) {
+            // console.log("Data Values: ",id,stubNumber);
+            $.ajax({
+                type: 'POST',
+                url: 'add_stub_no.php',
+                data: {id:id,stubNumber:stubNumber},
+                success: function (response){
+                    console.log("Response: ",response);
+                    table = $('#datatable').DataTable();
+                    table.draw();
+                }
+            })
+        }
+        
+        function revertStubNumber(id){
+            $.ajax({
+                type: 'POST',
+                url: 'setnull.php',
+                data: {id:id,type:"stub_number"},
+                success: function (response){}
+            })
+        }
 
         function showModalV1() {addModal.style.display = 'block';}
         function hideModalV1() {addModal.style.display = 'none';}

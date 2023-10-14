@@ -21,6 +21,7 @@ if($query == true)
     );
     echo json_encode($data);
 }
+
 else 
 {
     $data = array(
