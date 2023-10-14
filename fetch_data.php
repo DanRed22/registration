@@ -40,8 +40,10 @@ while($row = mysqli_fetch_assoc($run_query))
     $subarray[] = $row['lastname'];
     $subarray[] = $row['firstname'];
     $subarray[] = $row['email'];
-    $subarray[] = $row['program'];
-    $subarray[] = $row['year'];
+    $subarray[] = $row['sex'];
+    $subarray[] = $row['type'];
+    
+    
 
     $dt1 = new DateTime($row['timeIn']);
     $time1 = $dt1->format('h:i A');

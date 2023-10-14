@@ -9,11 +9,11 @@
     <link href="bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
     <link href="DataTables/datatables.min.css" rel="stylesheet"/>
 
-    <title>USC DCISM Attendance System</title>
+    <title>USC Attendance System</title>
   </head>
   <body>
-    <h1 class="text-center" style="margin-top:2%;">USC Department of Computer, Information Sciences, and Mathematics</h1>
-    <h1 class="text-center">DCISM Orientation A.Y. '23-'24</h1>
+    <h1 class="text-center">USC & Community Multipurpose Cooperative</h1>
+    <h1 class="text-center">61st General Assembly</h1>
     <div class="container-fluid">
         <div class="row">
             <div class="container">
@@ -36,8 +36,8 @@
                                 <th>LASTNAME</th>
                                 <th>FIRSTNAME</th>
                                 <th>EMAIL</th>
-                                <th>PROGRAM</th>
-                                <th>YEAR</th>
+                                <th>SEX</th>
+                                <th>TYPE</th>
                                 <th>ACTIONS</th>
                             </thead>
                             <tbody>
@@ -53,7 +53,10 @@
 
 
     <!-- Model for Check Out -->
-    <div id="verify2Modal" style="display:none; position:absolute; top:25%; left:40%;">
+
+    <div id="verify2Modal" style="display:none; position:absolute; top:0; left:0; width: 100vw; height: 100vh; background-color: rgba(0,0,0, 0.5); z-index: 100;">
+    <div style="-webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); width: 100vw; height: 100vh;">
+    <div style="display:flex; justify-content:center; align-items: center; z-index: 0;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -71,10 +74,14 @@
                 </div>
             </div>
         </div>
+</div>
+</div>
     </div>
 
     <!-- Model for Check In -->
-    <div id="verifyModal" style="display:none; position:absolute; top:25%; left:40%;">
+    <div id="verifyModal" style="display:none; position:absolute; top:0; left:0; width: 100vw; height: 100vh; background-color: rgba(0,0,0, 0.5); z-index: 100;">
+    <div style="-webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); width: 100vw; height: 100vh;">
+    <div style="display:flex; justify-content:center; align-items: center; z-index: 0;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -92,11 +99,15 @@
                 </div>
             </div>
         </div>
+</div>
+</div>
     </div>
 
     <!-- Modal For Add-->
-    <div id="addModal" style="display:none; position:absolute; top:15%; width:60%; left: 20%;">
-        <div class="modal-dialog" role="document">
+    <div id="addModal" style="display:none; position:absolute; top:0; left:0; width: 100vw; height: 100vh; background-color: rgba(0,0,0, 0.5); z-index: 100; overflow:hidden">
+
+    <div style="display:flex; justify-content:center; align-items: center; z-index: 0; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);">
+        <div class="modal-dialog"  style="width: 100vw; height: 70vw;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addMemberModalLabel">Add Member</h5>
@@ -115,16 +126,16 @@
                             <input type="text" class="form-control" id="lastName" name="lastName">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
-                            <label for="emailAdd">E-mail Address</label>
-                            <input type="text" class="form-control" id="emailAdd" name="emailAdd">
+                            <label for="email">E-mail Address</label>
+                            <input type="text" class="form-control" id="email" name="email">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
-                            <label for="program">Program</label>
-                            <input type="text" class="form-control" id="program" name="program">
+                            <label for="type">Type</label>
+                            <input type="text" class="form-control" id="type" name="type">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
-                            <label for="yearLvl">Year Level</label>
-                            <input type="text" class="form-control" id="yearLvl" name="yearLvl">
+                            <label for="sex">Sex</label>
+                            <input type="text" class="form-control" id="sex" name="sex">
                         </div>
                     </form>
                 </div>
@@ -134,6 +145,8 @@
                 </div>
             </div>
         </div>
+</div>
+
     </div>
 
     <script src="bootstrap-5.3.1/jquery-3.7.0.min.js"></script>

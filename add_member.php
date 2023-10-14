@@ -4,11 +4,11 @@ include('connection.php');
 
 $firstname = $_POST['firstName'];
 $lastname = $_POST['lastName'];
-$email = $_POST['emailAdd'];
-$program = $_POST['program'];
-$year = $_POST['yearLvl'];
+$sex = $_POST['sex'];
+$email = $_POST['email'];
+$type = $_POST['type'];
 
-$sql = "INSERT INTO `members`(`firstname`,`lastname`,`email`,`program`,`year`) VALUES('$firstname', '$lastname', '$email','$program','$year')";
+$sql = "INSERT INTO `members`(`firstname`,`lastname`,`email`,`sex`,`type`) VALUES('$firstname', '$lastname', '$email','$sex','$type')";
 $query = mysqli_query($con, $sql);
 if($query == true) 
 {
