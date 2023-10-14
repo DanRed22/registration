@@ -155,12 +155,12 @@
     </div>
 
     <!--- MODAL FOR EDIT EMAIL -->
-    <div id="editEmailModal" style="display: none;" class="modal">
+    <div id="editEmailModal" style="display: none;" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Email</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close closeEditEmailBtn" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -172,12 +172,12 @@
                     </div>
                     <div class="form-group">
                         <label for="alt_email">Alt Email</label>
-                        <input type="text" class="form-control" id="editAltEmail" name="editAltEmail">
+                        <input type="text" class="form-control " id="editAltEmail" name="editAltEmail">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary closeEditEmailBtn" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="saveEmailChanges">Save Changes</button>
             </div>
         </div>
@@ -212,7 +212,8 @@
             'render': function (data, type, full, meta) {
                 var email = full[3].split(" -- ")[0]; // Extract the email part
                 var alt_email = full[3].split(" -- ")[1];
-                return '<button class="btn btn-sm btn-primary editEmailBtn" data-id="' + full[0] + '" data-email="' + email + '" data-alt-email="' + alt_email + '">Edit</button> &emsp;' + email + ' -- ' + alt_email;
+                return '<button class="btn btn-sm btn-primary editEmailBtn" data-id="' + full[0] + '" data-email="' + email + '" data-alt-email="' + alt_email + '" data-backdrop="static" data-keyboard="false" data-bs-target="#editEmailModal">Edit</button> &emsp;' + email + ' -- ' + alt_email;
+
             }
             },
         ],
@@ -339,7 +340,7 @@
         }
 
 
-        $(document).on('click', '.editEmailBtn', function () {
+    $(document).on('click', '.editEmailBtn', function () {
     var id = $(this).data('id');
     var email = $(this).data('email');
     var altEmail = $(this).data('alt-email');
@@ -351,6 +352,13 @@
     // Open the edit email modal
     $('#editEmailModal').modal('show');
     
+    //Close Edit Email Modal
+
+    $(document).on('click', '.closeEditEmailBtn', function (){
+        $('#editEmailModal').modal('hide');
+        location.reload(); //reload the email after the edit
+    })
+
     // Handle the save button click
     $('#saveEmailChanges').on('click', function () {
         var editedEmail = $('#editEmail').val();
