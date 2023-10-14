@@ -184,6 +184,32 @@
     </div>
 </div>
 
+<!-- Modal For Edit Remarks -->
+<div id="editRemarksModal" style="display: none;" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Remarks</h5>
+                <button type="button" class="close closeEditRemarksBtn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editRemarksForm">
+                    <div class="form-group">
+                        <label for="editRemarks">Remarks</label>
+                        <textarea class="form-control" id="editRemarks" name="editRemarks" rows="4"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary closeEditRemarksBtn" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveRemarksChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="bootstrap-5.3.1/jquery-3.7.0.min.js"></script>
     <script src="DataTables/datatables.min.js"></script>
     <script src="bootstrap-5.3.1/js/bootstrap.bundle.min.js"></script>
@@ -216,6 +242,14 @@
 
             }
             },
+            {
+                'targets': 0,
+                'render': function (data, type, full, meta) {
+                    var userId = data; 
+                    var remarks = full[8];
+                    return '<button class="btn btn-sm btn-info editRemarksBtn" data-id=' + userId + ' data-remarks=' + remarks + '>' + data + '</button>' ;
+                }
+            }
         ],
             
         });
@@ -386,6 +420,58 @@
         });
     });
 });
+
+
+        // Close Edit Remarks Modal and Reload Page
+        $(document).on('hidden.bs.modal', '#editRemarksModal', function () {
+            location.reload(); // Reload the page when the modal is closed
+        });
+
+
+        // Open the edit remarks modal
+        $(document).on('click', '.editRemarksBtn', function () {
+            var id = $(this).data('id');
+            var remarks = $(this).data('remarks');
+            
+            // Populate the modal field with the current remarks
+            $('#editRemarks').val(remarks);
+            
+            // Open the edit remarks modal
+            $('#editRemarksModal').modal('show');
+            
+            // Close Edit Remarks Modal
+            $(document).on('click', '.closeEditRemarksBtn', function (){
+                $('#editRemarksModal').modal('hide');
+            });
+
+            // Handle the save button click
+            $('#saveRemarksChanges').on('click', function () {
+                var editedRemarks = $('#editRemarks').val();
+                
+                // Send the data to the server to update the remarks for the user
+                $.ajax({
+                        url: 'remarks.php',
+                        type: 'POST',
+                        data: {
+                            id: id,
+                            remarks: editedRemarks
+                        },
+                        success: function (response) {
+                            // Handle success or error here
+                            console.log(response);
+                            var res = JSON.parse(response);
+                            alert(res["status"]);
+                            if(res["status"] == 'success'){
+                                //alert("Remark Added!");
+                                location.reload();
+                            }else{
+                                alert("Failed to add Remark");
+                            }
+                        }
+                    });
+
+            });
+        });
 
         // Stores Control Number of Stub
 

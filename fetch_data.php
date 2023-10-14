@@ -42,6 +42,7 @@ while($row = mysqli_fetch_assoc($run_query))
     $subarray[] = $row['email'] . ' -- ' . $row['alt_email'];
     $subarray[] = $row['sex'];
     $subarray[] = $row['type'];
+    
 
     if ($row['stub_number'] === null) {
         $subarray[] = '<input type="text" name="stub-number" class="stub-number" placeholder="Input Control Number" value="" />';
@@ -66,7 +67,7 @@ while($row = mysqli_fetch_assoc($run_query))
     {
         $subarray[] = '<a href="javascript:void(0);" data-id='.$row['id'].' class="btn btn-sm btn-warning checkInBtn">Check In</a> <a class="btn btn-sm btn-secondary checkOutBtn">Check Out</a>';
     }
-    
+    $subarray[] = $row['remarks'];
     $data[] = $subarray;
 }
 
