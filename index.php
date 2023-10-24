@@ -139,7 +139,7 @@
                             <input type="text" class="form-control" id="alt_email" name="alt_email">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
-                            <label for="type">Type ( USE "3" )</label>
+                            <label for="type">Type</label>
                             <input type="text" class="form-control" id="type" name="type">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
