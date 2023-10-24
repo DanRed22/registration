@@ -13,14 +13,14 @@
   </head>
   <body>
     <h1 class="text-center">USC & Community Multipurpose Cooperative</h1>
-    <h1 class="text-center">61st General Assembly</h1>
+    <h4 class="text-center">61st General Assembly</h4>
     <div class="container-fluid">
         <div class="row">
             <div class="container">
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <button type="button" style="margin-bottom: 40px;" class="btn btn-primary" onclick="showModalV1()">
+                        <button type="button" style="margin-bottom: 40px;" class="btn btn-success" onclick="showModalV1()">
                             ADD
                         </button>
                     </div>
@@ -46,10 +46,14 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        
+                    </div>
                 </div>
             </div>
         </div>
+        <div id="countArea" style="text-align:center"></div>
+    <div id="countTotal" style="text-align:center"></div>
     </div>
 
 
@@ -105,10 +109,10 @@
     </div>
 
     <!-- Modal For Add-->
-    <div id="addModal" style="display:none; position:absolute; top:0; left:0; width: 100vw; height: 100vh; background-color: rgba(0,0,0, 0.5); z-index: 100; overflow:hidden">
+    <div id="addModal" style="display:none; position:absolute; top:0; left:0; width: 100vw; height: 150vh; background-color: rgba(0,0,0, 0.5); z-index: 100; overflow:hidden">
 
     <div style="display:flex; justify-content:center; align-items: center; z-index: 0; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);">
-        <div class="modal-dialog"  style="width: 100vw; height: 70vw;" role="document">
+        <div class="modal-dialog"  style="width: 100vw; height: 150vh;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addMemberModalLabel">Add Member</h5>
@@ -135,7 +139,7 @@
                             <input type="text" class="form-control" id="alt_email" name="alt_email">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
-                            <label for="type">Type</label>
+                            <label for="type">Type ( USE "3" )</label>
                             <input type="text" class="form-control" id="type" name="type">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
@@ -143,9 +147,15 @@
                             <input type="text" class="form-control" id="sex" name="sex">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
+                            <label for="stub_number">Stub Number</label>
+                            <input type="text" class="form-control" id="stub_number" name="stub_number">
+                        </div>
+                        <div class="form-group" style="margin-bottom:3%">
                             <label for="remarks">Additional Remarks</label>
                             <input type="text" class="form-control" id="remarks" name="remarks">
                         </div>
+                        
+                        
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -257,6 +267,40 @@
         ],
             
         });
+
+        var total = 0;
+        $.ajax({
+                url: 'count.php',
+                method: 'GET',
+                success: function (data){
+                    var parsedData = JSON.parse(data)
+                    console.log("HERE",parsedData);
+                    
+                    for(var object of parsedData){
+                        var count = object["COUNT(*)"];
+                        var typeDisplay = object["type"];
+                        console.log(typeDisplay);
+                        var data=document.createElement('p');
+                        if(typeDisplay == "1"){
+                            data.textContent="Type: Regular => Count: "+count;
+                        }else if(typeDisplay == "2"){
+                            data.textContent="Type: Associate => Count: "+count;
+                        }else{
+                            var newCount = parseInt(count);
+                            newCount -= 1;
+                            data.textContent="Type: Not Listed => Count: "+newCount;
+                        } 
+                        
+                        countArea.appendChild(data);
+                        total = total+parseInt(count);
+                        console.log("TOTAL: ",total);
+                    }
+                    total -= 1;
+                    var data2=document.createElement('p');
+                    data2.textContent = "Total Count: "+total;
+                    countTotal.appendChild(data2);
+                }
+            });
     </script>
 
     <script type="text/javascript">
@@ -551,6 +595,7 @@
 
             currId=id;
         });
+        
 
         $(document).on('change', '.stub-numberz', function () {
             newInputValue = $(this).val(); // Update the new input value

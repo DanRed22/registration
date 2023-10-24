@@ -9,6 +9,7 @@ if(isset($_POST['search']['value']))
     $search_value = $_POST['search']['value'];
     $sql .= " WHERE lastname like '%".$search_value."%'";
     $sql .= " OR firstname like '%".$search_value."%'";
+    $sql .= "OR stub_number like '%".$search_value."%'";
 }
 
 if(isset($_POST['order']))
