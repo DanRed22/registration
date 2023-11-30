@@ -12,8 +12,8 @@
     <title>USC Attendance System</title>
   </head>
   <body>
-    <h1 class="text-center">USC & Community Multipurpose Cooperative</h1>
-    <h4 class="text-center">61st General Assembly</h4>
+    <h1 class="text-center">USC </h1>
+    <h4 class="text-center">Attendance System</h4>
     <div class="container-fluid">
         <div class="row">
             <div class="container">
