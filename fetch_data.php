@@ -10,6 +10,7 @@ if(isset($_POST['search']['value']))
     $sql .= " WHERE lastname like '%".$search_value."%'";
     $sql .= " OR firstname like '%".$search_value."%'";
     $sql .= "OR stub_number like '%".$search_value."%'";
+    $sql .= "OR school_id like '%".$search_value."%'";
 }
 
 if(isset($_POST['order']))
@@ -41,7 +42,7 @@ while($row = mysqli_fetch_assoc($run_query))
     $subarray[] = $row['lastname'];
     $subarray[] = $row['firstname'];
     $subarray[] = $row['email'] . ' -- ' . $row['alt_email'];
-    $subarray[] = $row['sex'];
+    $subarray[] = $row['school_id'];
     $subarray[] = $row['type'];
     
 

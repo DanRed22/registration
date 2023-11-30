@@ -36,8 +36,8 @@
                                 <th>LASTNAME</th>
                                 <th>FIRSTNAME</th>
                                 <th>EMAILS (PERSONAL - CORPORATE)</th>
-                                <th>SEX</th>
-                                <th>TYPE</th>
+                                <th>SCHOOL ID</th>
+                                <th>PROGRAM</th>
                                 <th>STUB NUMBER</th>
                                 <th>ACTIONS</th>
                             </thead>
@@ -139,12 +139,12 @@
                             <input type="text" class="form-control" id="alt_email" name="alt_email">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
-                            <label for="type">Type</label>
+                            <label for="type">Program</label>
                             <input type="text" class="form-control" id="type" name="type">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
-                            <label for="sex">Sex</label>
-                            <input type="text" class="form-control" id="sex" name="sex">
+                            <label for="school_id">School ID</label>
+                            <input type="text" class="form-control" id="school_id" name="school_id">
                         </div>
                         <div class="form-group" style="margin-bottom:3%">
                             <label for="stub_number">Stub Number</label>

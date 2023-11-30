@@ -4,17 +4,17 @@ include('connection.php');
 
 $firstname = $_POST['firstName'];
 $lastname = $_POST['lastName'];
-$sex = $_POST['sex'];
+$school_id = $_POST['school_id'];
 $email = $_POST['email'];
 $alt_email = isset($_POST['alt_email']) ? $_POST['alt_email'] : NULL;
 $type = $_POST['type'];
 $stub_number = isset($_POST['stub_number']) ? $_POST['stub_number'] : NULL;
 $remarks = isset($_POST['remarks']) ? $_POST['remarks'] : NULL;
 
-$sql = "INSERT INTO `members`(`firstname`,`lastname`,`email`,`alt_email`,`sex`,`type`, `stub_number`, `remarks`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO `members`(`firstname`,`lastname`,`email`,`alt_email`,`school_id`,`type`, `stub_number`, `remarks`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
 if ($stmt = mysqli_prepare($con, $sql)) {
-    mysqli_stmt_bind_param($stmt, "ssssssss", $firstname, $lastname, $email, $alt_email, $sex, $type, $stub_number, $remarks);
+    mysqli_stmt_bind_param($stmt, "ssssssss", $firstname, $lastname, $email, $alt_email, $school_id, $type, $stub_number, $remarks);
 
     if (mysqli_stmt_execute($stmt)) {
         $data = array(
