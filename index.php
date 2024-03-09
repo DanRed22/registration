@@ -13,7 +13,8 @@
   </head>
   <body>
     <h1 class="text-center">USC </h1>
-    <h4 class="text-center">Attendance System</h4>
+    <h4 class="text-center">Cooperative Assembly Attendance System</h4>
+    <h5 class="text-center">March 10, 2024</h5>
     <div class="container-fluid">
         <div class="row">
             <div class="container">
@@ -32,12 +33,14 @@
                     <div class="col-md-8">
                         <table id="datatable" class="table">
                             <thead>
-                                <th>ID</th>
+                                <th>No. </th>
                                 <th>LASTNAME</th>
                                 <th>FIRSTNAME</th>
-                                <th>EMAILS (PERSONAL - CORPORATE)</th>
-                                <th>SCHOOL ID</th>
-                                <th>PROGRAM</th>
+                                <th>MI</th>
+                                <th>EMAILS (USC - PERSONAL)</th>
+                                <th>STATUS</th>
+                                <th>COOP ID</th>
+                                <th>TYPE</th>
                                 <th>STUB NUMBER</th>
                                 <th>ACTIONS</th>
                             </thead>
@@ -120,39 +123,40 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body ">
                     <form id="addForm">
-                        <div class="form-group" style="margin-bottom:3%">
-                            <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName">
+                    <div class="row" style="margin-bottom:3%">
+                        <div class="col">
+                            <input type="text" placeholder="First Name" class="form-control" id="firstName" name="firstName">
                         </div>
-                        <div class="form-group" style="margin-bottom:3%">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName">
+                        <div class="col">
+                            <input type="text" placeholder="Last Name" class="form-control" id="lastName" name="lastName">
                         </div>
-                        <div class="form-group" style="margin-bottom:3%">
-                            <label for="email">E-mail Address</label>
-                            <input type="text" class="form-control" id="email" name="email">
+                        <div class="col">
+                        <input type="text" placeholder="M.I." class="form-control" id="mi" name="mi">
+</div>
+                    </div>
+                        
+                        <div class="input-group-sm" style="margin-bottom:3%">
+                            <input type="text" placeholder="Email" class="form-control" id="email" name="email">
                         </div>
-                        <div class="form-group" style="margin-bottom:3%">
-                            <label for="alt_email">Alt E-mail</label>
-                            <input type="text" class="form-control" id="alt_email" name="alt_email">
+                        <div class="input-group-sm" style="margin-bottom:3%">
+                            <input type="text"placeholder="Alt Email"  class="form-control" id="alt_email" name="alt_email">
                         </div>
-                        <div class="form-group" style="margin-bottom:3%">
-                            <label for="type">Program</label>
-                            <input type="text" class="form-control" id="type" name="type">
+                        <div class="input-group-sm" style="margin-bottom:3%">
+                            <input type="text" placeholder="Type" class="form-control" id="type" name="type">
                         </div>
-                        <div class="form-group" style="margin-bottom:3%">
-                            <label for="school_id">School ID</label>
-                            <input type="text" class="form-control" id="school_id" name="school_id">
+                        <div class="input-group-sm" style="margin-bottom:3%">
+                            <input type="text" placeholder="Coop ID" class="form-control" id="school_id" name="school_id">
                         </div>
-                        <div class="form-group" style="margin-bottom:3%">
-                            <label for="stub_number">Stub Number</label>
-                            <input type="text" class="form-control" id="stub_number" name="stub_number">
+                        <div class="input-group-sm" style="margin-bottom:3%">
+                            <input type="text" placeholder="Stub ID" class="form-control" id="stub_number" name="stub_number">
                         </div>
-                        <div class="form-group" style="margin-bottom:3%">
-                            <label for="remarks">Additional Remarks</label>
-                            <input type="text" class="form-control" id="remarks" name="remarks">
+                        <div class="input-group-sm" style="margin-bottom:3%">
+                            <input type="text" placeholder="Status" class="form-control" id="status" name="status">
+                        </div>
+                        <div class="input-group-sm" style="margin-bottom:3%">
+                            <input type="text" placeholder="Remarks" class="form-control" id="remarks" name="remarks">
                         </div>
                         
                         
@@ -247,11 +251,11 @@
                 'orderable': false, 
             },
             {
-            // Add the "Edit Email" button to the email column (index 3)
-            'targets': 3,
+            // Add the "Edit Email" button to the email column (index 4)
+            'targets': 4,
             'render': function (data, type, full, meta) {
-                var email = full[3].split(" -- ")[0]; // Extract the email part
-                var alt_email = full[3].split(" -- ")[1];
+                var email = full[4].split(" -- ")[0]; // Extract the email part
+                var alt_email = full[4].split(" -- ")[1];
                 return '<button class="btn btn-sm btn-primary editEmailBtn" data-id="' + full[0] + '" data-email="' + email + '" data-alt-email="' + alt_email + '" data-backdrop="static" data-keyboard="false" data-bs-target="#editEmailModal">Edit</button> &emsp;' + email + ' -- ' + alt_email;
 
             }
@@ -260,7 +264,7 @@
                 'targets': 0,
                 'render': function (data, type, full, meta) {
                     var userId = data; 
-                    var remarks = full[8];
+                    var remarks = full[10];
                     return '<button class="btn btn-sm btn-info editRemarksBtn" data-id=' + userId + ' data-remarks=' + remarks + '>' + data + '</button>' ;
                 }
             }
@@ -269,38 +273,48 @@
         });
 
         var total = 0;
-        $.ajax({
-                url: 'count.php',
-                method: 'GET',
-                success: function (data){
-                    var parsedData = JSON.parse(data)
-                    console.log("HERE",parsedData);
-                    
-                    for(var object of parsedData){
-                        var count = object["COUNT(*)"];
-                        var typeDisplay = object["type"];
-                        console.log(typeDisplay);
-                        var data=document.createElement('p');
-                        if(typeDisplay == "1"){
-                            data.textContent="Type: Regular => Count: "+count;
-                        }else if(typeDisplay == "2"){
-                            data.textContent="Type: Associate => Count: "+count;
-                        }else{
-                            var newCount = parseInt(count);
-                            newCount -= 1;
-                            data.textContent="Type: Not Listed => Count: "+newCount;
-                        } 
-                        
-                        countArea.appendChild(data);
-                        total = total+parseInt(count);
-                        console.log("TOTAL: ",total);
-                    }
-                    total -= 1;
-                    var data2=document.createElement('p');
-                    data2.textContent = "Total Count: "+total;
-                    countTotal.appendChild(data2);
-                }
-            });
+$.ajax({
+    url: 'count.php',
+    method: 'GET',
+    success: function (data) {
+        var parsedData = JSON.parse(data);
+        console.log("HERE", parsedData);
+
+        parsedData.forEach(function(object) {
+            var count = object["COUNT(*)"];
+            var typeName = object["type"];
+
+            var data = document.createElement('p');
+            if (typeName) {
+                data.textContent = "Type: " + typeName + " => Count: " + count;
+            } else {
+                typeName = "Not Defined";
+                data.textContent = "Type: " + typeName + " => Count: " + count;
+            }
+            countArea.appendChild(data);
+
+            total += parseInt(count);
+        });
+
+        var totalData = document.createElement('p');
+        totalData.textContent = "Total Count: " + total;
+        countTotal.appendChild(totalData);
+    }
+});
+
+
+
+function getTypeName(type) {
+    switch (type) {
+        case "1":
+            return "Regular";
+        case "2":
+            return "Associate";
+        default:
+            return "Not Listed";
+    }
+}
+
     </script>
 
     <script type="text/javascript">

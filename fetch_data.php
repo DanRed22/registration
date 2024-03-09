@@ -41,7 +41,9 @@ while($row = mysqli_fetch_assoc($run_query))
     $subarray[] = $row['id'];
     $subarray[] = $row['lastname'];
     $subarray[] = $row['firstname'];
+    $subarray[] = $row['mi'];
     $subarray[] = $row['email'] . ' -- ' . $row['alt_email'];
+    $subarray[] = $row['status'];
     $subarray[] = $row['school_id'];
     $subarray[] = $row['type'];
     
